@@ -4,12 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pokemoninfo.fragments.PokemonListFragment
-//import com.squareup.moshi.JsonAdapter
-//import com.squareup.moshi.KotlinJsonAdapterFactory
-//import com.squareup.moshi.Moshi
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
 import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
-//import retrofit2.converter.moshi.MoshiConverterFactory
+//import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val TAG = "RetrofitClient"
 private const val BASE_URL = "https://pokeapi.co/"
@@ -20,13 +19,13 @@ class RetrofitClient {
     private var retrofitApi: ApiInterface
 
     init{
-//        val moshi = Moshi.Builder()
-//            .addLast(KotlinJsonAdapterFactory())
-//            .build()
+        val moshi = Moshi.Builder()
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
 
         val retrofit:Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
         retrofitApi = retrofit.create(ApiInterface::class.java)
