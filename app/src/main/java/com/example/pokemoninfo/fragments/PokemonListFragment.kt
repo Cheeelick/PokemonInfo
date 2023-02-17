@@ -5,70 +5,100 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemoninfo.PokemonInfoViewModel
+import com.example.pokemoninfo.PokemonViewModel
 import com.example.pokemoninfo.R
 import com.example.pokemoninfo.api.Pokemon
-import com.example.pokemoninfo.api.PokemonResponse
 import com.example.pokemoninfo.api.RetrofitClient
-import retrofit2.Call
+import com.example.pokemoninfo.databinding.FragmentListPokemonBinding
+import com.example.pokemoninfo.databinding.ItemListPokemonFragmentBinding
 import retrofit2.Retrofit
 
 private const val TAG = "PokemonListFragment"
 
 class PokemonListFragment: Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var pokemonViewModel: PokemonInfoViewModel
+    private var _binding: FragmentListPokemonBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val responsePokemon = RetrofitClient().getPokemonName()
-        responsePokemon.observe(
-            this,
-            Observer { requestMessage ->
-                Log.d(TAG, "${requestMessage}")
-            }
-        )
+        pokemonViewModel = ViewModelProviders.of(this).get(PokemonInfoViewModel::class.java )
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_list_pokemon, container, false)
+    ): View {
+        _binding = FragmentListPokemonBinding.inflate(inflater, container, false)
 
-        recyclerView = view.findViewById(R.id.recycler_list)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val view = binding.root
+
+        binding.recyclerPokemon.apply{
+            layoutManager = LinearLayoutManager(context)
+        }
 
 
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        pokemonViewModel.pokemonItemLiveData.observe(
+            viewLifecycleOwner,
+            Observer { requestMessage ->
+                binding.recyclerPokemon.apply {
+                    Log.d(TAG, "Request recuived ${requestMessage}")
+                    adapter = PokemonAdapter(requestMessage)
+                }
+            }
+        )
+    }
 
-//    private inner class PokemonAdapter(): RecyclerView.Adapter<PokemonHolder>(){
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonHolder {
-//
-//        }
-//
-//
-//        override fun onBindViewHolder(holder: PokemonHolder, position: Int) {
-//        }
-//
-//        override fun getItemCount(): Int {
-//        }
-//
-//    }
-//
-//
-//    private inner class PokemonHolder(): RecyclerView.ViewHolder(){
-//
-//    }
+    private inner class PokemonAdapter(private val requestMessage: List<Pokemon>): RecyclerView.Adapter<PokemonHolder>(){
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonHolder {
+            val binding = DataBindingUtil.inflate<ItemListPokemonFragmentBinding>(
+                layoutInflater, R.layout.item_list_pokemon_fragment, parent, false)
+            return PokemonHolder(binding)
+        }
 
+        override fun onBindViewHolder(holder: PokemonHolder, position: Int) {
+            val infoPokemon = requestMessage[position]
+            holder.bind(infoPokemon)
+        }
+
+        override fun getItemCount() = requestMessage.size
+
+    }
+
+
+    private inner class PokemonHolder(private val binding: ItemListPokemonFragmentBinding)
+        : RecyclerView.ViewHolder(binding.root){
+        init{
+              binding.viewModel = PokemonViewModel()
+        }
+
+        fun bind(result: Pokemon){
+            binding.apply{
+                viewModel?.info = result
+                executePendingBindings()
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     companion object{
         fun newInstance(): PokemonListFragment{
             return PokemonListFragment()
