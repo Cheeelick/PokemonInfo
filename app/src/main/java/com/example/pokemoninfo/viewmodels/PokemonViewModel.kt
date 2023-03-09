@@ -1,4 +1,4 @@
-package com.example.pokemoninfo
+package com.example.pokemoninfo.viewmodels
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -17,6 +17,4 @@ class PokemonViewModel(): BaseObservable() {
 
     @get:Bindable
     val title: String? get() = info?.namePokemon
-
-
 }

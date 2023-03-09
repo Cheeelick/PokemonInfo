@@ -46,6 +46,7 @@ class RetrofitClient {
                     result += i
                 }
                 responseLiveData.value = result
+                Log.d(TAG, "STAAAAAAAAAAAAAAAAAART")
             }
 
             override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
@@ -56,6 +57,10 @@ class RetrofitClient {
         return responseLiveData
     }
 
+    fun getImagePokemon(){
+
+
+    }
 
 
 

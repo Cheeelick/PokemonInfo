@@ -8,30 +8,33 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pokemoninfo.PokemonInfoViewModel
-import com.example.pokemoninfo.PokemonViewModel
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.pokemoninfo.viewmodels.PokemonViewModel
 import com.example.pokemoninfo.R
 import com.example.pokemoninfo.api.Pokemon
 import com.example.pokemoninfo.api.RetrofitClient
 import com.example.pokemoninfo.databinding.FragmentListPokemonBinding
 import com.example.pokemoninfo.databinding.ItemListPokemonFragmentBinding
-import retrofit2.Retrofit
+import com.example.pokemoninfo.viewmodels.RetrofitViewModel
 
 private const val TAG = "PokemonListFragment"
 
 class PokemonListFragment: Fragment() {
 
-    private lateinit var pokemonViewModel: PokemonInfoViewModel
+
     private var _binding: FragmentListPokemonBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: RetrofitViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        pokemonViewModel = ViewModelProviders.of(this).get(PokemonInfoViewModel::class.java )
+        viewModel = ViewModelProviders.of(this).get(RetrofitViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -44,7 +47,7 @@ class PokemonListFragment: Fragment() {
         val view = binding.root
 
         binding.recyclerPokemon.apply{
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context,2)
         }
 
 
@@ -53,7 +56,7 @@ class PokemonListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pokemonViewModel.pokemonItemLiveData.observe(
+        viewModel.responseLiveData.observe(
             viewLifecycleOwner,
             Observer { requestMessage ->
                 binding.recyclerPokemon.apply {
@@ -84,12 +87,12 @@ class PokemonListFragment: Fragment() {
     private inner class PokemonHolder(private val binding: ItemListPokemonFragmentBinding)
         : RecyclerView.ViewHolder(binding.root){
         init{
-              binding.viewModel = PokemonViewModel()
+              binding.viewModelBinding = PokemonViewModel()
         }
 
         fun bind(result: Pokemon){
             binding.apply{
-                viewModel?.info = result
+                viewModelBinding?.info = result
                 executePendingBindings()
             }
         }
