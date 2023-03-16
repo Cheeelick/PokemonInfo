@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 
 data class Pokemon (
     @Json(name = "name")
-    val namePokemon: String?
+    val namePokemon: String
 )

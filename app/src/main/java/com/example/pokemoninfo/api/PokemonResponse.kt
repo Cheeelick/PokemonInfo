@@ -4,7 +4,10 @@ package com.example.pokemoninfo.api
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-data class PokemonResponse (
+data class PokemonResponse(
     @Json(name = "results")
-    val results: List<Pokemon>?
+    val results: List<Pokemon>,
+
+    @Json(name="count")
+    val count: Int
 )

@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <data>
-        <variable
-            name="viewModelBinding"
-            type="com.example.pokemoninfo.viewmodels.PokemonViewModel" />
-    </data>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical"
@@ -31,34 +25,25 @@
                 android:orientation="horizontal"
                 android:layout_margin="3dp">
 
-                <ImageView
-                    android:id="@+id/pokeball"
-                    android:layout_width="100dp"
-                    android:layout_height="79dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@mipmap/pokeball" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/name_pokemon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        android:text="@{viewModelBinding.title}"
-                        tools:text="PokemonName"/>
+                        tools:text="PokemonName" />
 
                     <TextView
                         android:id="@+id/ability"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        android:text="AbilityPokemon"
-                        android:saveEnabled="true"/>
-
+                        tools:text="Ability Pokemon" />
 
 
                 </LinearLayout>
