@@ -19,11 +19,21 @@
             android:layout_margin="6dp"
             style="@style/rectangle_list_style">
 
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_margin="3dp">
+
+
+                <androidx.constraintlayout.utils.widget.ImageFilterView
+                    android:id="@+id/pokemonImage"
+                    android:layout_width="152dp"
+                    android:layout_height="match_parent" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

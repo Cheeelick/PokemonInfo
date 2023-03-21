@@ -35,35 +35,30 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
 
         val factory = PassengerViewModelFactory(ApiInterface())
         viewModel = ViewModelProviders.of(this, factory).get(PassengerViewModel::class.java)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentListPokemonBinding.inflate(inflater, container, false)
-
-        binding.recyclerPokemon.apply{
-            layoutManager = GridLayoutManager(context,2)
-            adapter = pokemonAdapter
-        }
-
-        return _binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
 
         lifecycleScope.launch {
             viewModel.passengers.collectLatest { pageData ->
                 pokemonAdapter.submitData(pageData)
             }
         }
-
-        binding.recyclerPokemon.adapter = pokemonAdapter
     }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        ceState: Bundle?
+    ): View? {
+        _binding = FragmentListPokemonBinding.inflate(inflater, container, false)
+
+        binding.recyclerPokemon.apply{
+            layoutManager = GridLayoutManager(context,1)
+            adapter = pokemonAdapter
+        }
+
+
+        return _binding?.root
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

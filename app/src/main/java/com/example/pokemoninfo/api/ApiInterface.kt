@@ -9,13 +9,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiInterface {
-    @GET("/api/v2/pokemon/")
+    @GET("/api/v2/pokemon/{pages}")
     suspend fun getAllName(
+        @Path("pages") pages: Int,
         @Query("page") page: Int = 1,
-        @Query("pageSize") pageSize: Int = 10
+        @Query("pageSize") pageSize: Int
     ): PokemonResponse
 
     companion object {
