@@ -1,11 +1,9 @@
 package com.example.pokemoninfo.api
 
 import android.util.Log
-import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.recyclerview.widget.DiffUtil
+import com.example.pokemoninfo.model.PokemonResponseDto
 
 
 private const val TAG = "PokemonPageSource"
@@ -20,13 +18,15 @@ class PokemonPageSource(
             val pageSize = params.loadSize
             val response = service.getAllName(page, page, pageSize)
 
-            val urls = mutableListOf<String>()
-            urls.add(response.sprites.other.official_artwork.urlPhoto)
+
+            val urls = mutableListOf<PokemonResponseDto>()
+            urls.add(response.body()!!)
+
 
             Log.d(TAG, "!!!!!!!!!!${page}!!!!!!!!!!!!!!!")
 
             LoadResult.Page(
-                data = urls,
+                data = urls.map{it.toPokemonResponse()},
                 prevKey = if (page > 0) page - 1 else null,
                 nextKey = if (page < 1281) page + 1 else null
             )

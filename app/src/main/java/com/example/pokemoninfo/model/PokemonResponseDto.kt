@@ -1,14 +1,13 @@
-package com.example.pokemoninfo.api
+package com.example.pokemoninfo.model
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
-data class PokemonResponse(
+data class PokemonResponseDto(
 //    @Json(name = "forms")
 //    val results: List<Pokemon>,
 
     @Json(name = "sprites")
-    val sprites: Other,
+    val sprites: OtherDto,
 
     @Json(name = "name")
     val name: String
