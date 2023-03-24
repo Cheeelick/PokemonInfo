@@ -16,7 +16,7 @@ interface ApiInterface {
     @GET("/api/v2/pokemon/{pages}")
     suspend fun getAllName(
         @Path("pages") pages: Int,
-        @Query("page") page: Int = 1,
+        @Query("page") page: Int,
         @Query("pageSize") pageSize: Int
     ): PokemonResponse
 

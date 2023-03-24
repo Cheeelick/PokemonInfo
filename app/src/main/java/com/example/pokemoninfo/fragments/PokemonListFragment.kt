@@ -51,7 +51,7 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
         _binding = FragmentListPokemonBinding.inflate(inflater, container, false)
 
         binding.recyclerPokemon.apply{
-            layoutManager = GridLayoutManager(context,1)
+            layoutManager = GridLayoutManager(context,2)
             adapter = pokemonAdapter
         }
 

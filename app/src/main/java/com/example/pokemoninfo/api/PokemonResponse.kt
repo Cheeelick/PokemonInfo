@@ -4,9 +4,12 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 data class PokemonResponse(
-    @Json(name = "forms")
-    val results: List<Pokemon>,
+//    @Json(name = "forms")
+//    val results: List<Pokemon>,
 
     @Json(name = "sprites")
-    val sprites: Other
+    val sprites: Other,
+
+    @Json(name = "name")
+    val name: String
 )

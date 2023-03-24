@@ -2,6 +2,7 @@ package com.example.pokemoninfo
 
 import android.content.Context
 import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,6 +16,8 @@ import com.example.pokemoninfo.databinding.ItemListPokemonFragmentBinding
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.NonDisposableHandle.parent
 
+private const val TAG = "PokemonAdapter"
+
 class PokemonAdapter(private val context: Context?):
     PagingDataAdapter<Any, PokemonViewHolder>(PokemonComparator){
 
@@ -23,6 +26,9 @@ class PokemonAdapter(private val context: Context?):
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
 //        holder.bind(getItem(position) as Pokemon?)
         holder.bindPhoto(getItem(position) as String)
+
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
@@ -48,9 +54,9 @@ class PokemonViewHolder(private val binding: ItemListPokemonFragmentBinding)
     fun bindPhoto(item: String?) {
         Picasso.get()
             .load(item)
-            .placeholder(R.mipmap.pokeball)
-            .error(R.drawable.baseline_catching_pokemon_24)
             .into(binding.pokemonImage)
+
+
     }
 }
 
