@@ -1,5 +1,6 @@
 package com.example.pokemoninfo.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +18,22 @@ import com.example.pokemoninfo.viewmodels.PassengerViewModel
 import com.example.pokemoninfo.viewmodels.PassengerViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 private const val TAG = "PokemonListFragment"
 
 class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
 
+    private var callbacks: Callbacks? = null
+    private lateinit var viewModel: PassengerViewModel
     private var _binding: FragmentListPokemonBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: PassengerViewModel
     private val pokemonAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        PokemonAdapter(context)
+        PokemonAdapter(context, callbacks)
+    }
+
+    interface Callbacks{
+        fun onCrimeSelected(pokemonId: String)
     }
 
 
@@ -41,6 +48,11 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
                 pokemonAdapter.submitData(pageData)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
     }
 
     override fun onCreateView(
@@ -59,7 +71,10 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
         return _binding?.root
     }
 
-
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

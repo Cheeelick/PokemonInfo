@@ -2,5 +2,6 @@
 <resources>
     <style name="rectangle_list_style">
         <item name="android:background">@drawable/rectangle_list_normal</item>
+
     </style>
 </resources>

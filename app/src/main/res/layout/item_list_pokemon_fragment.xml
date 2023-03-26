@@ -16,11 +16,12 @@
 
         <TextView
             android:id="@+id/namePokemon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            style="@style/rectangle_list_style"
+            android:layout_width="131dp"
+            android:layout_height="28dp"
+            android:gravity="center"
             android:text="NamePokemon"
-            android:textColor="@color/grey"/>
+            android:textColor="@color/grey" />
 
     </LinearLayout>
 

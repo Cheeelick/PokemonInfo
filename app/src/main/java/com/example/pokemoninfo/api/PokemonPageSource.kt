@@ -18,12 +18,12 @@ class PokemonPageSource(
             val pageSize = params.loadSize
             val response = service.getAllName(page, page, pageSize)
 
-
             val urls = mutableListOf<PokemonResponseDto>()
             urls.add(response.body()!!)
 
+//            Log.d(TAG, "!!!!!!!!!!${page}!!!!!!!!!!!!!!!")
+//            Log.d(TAG, "!!!!!!!!!!${urls}!!!!!!!!!!!!!!!")
 
-            Log.d(TAG, "!!!!!!!!!!${page}!!!!!!!!!!!!!!!")
 
             LoadResult.Page(
                 data = urls.map{it.toPokemonResponse()},
