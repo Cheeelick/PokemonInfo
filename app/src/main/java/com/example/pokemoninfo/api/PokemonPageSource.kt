@@ -26,7 +26,7 @@ class PokemonPageSource(
 
 
             LoadResult.Page(
-                data = urls.map{it.toPokemonResponse()},
+                data = urls.map {it.toPokemonResponse()},
                 prevKey = if (page > 0) page - 1 else null,
                 nextKey = if (page < 1281) page + 1 else null
             )

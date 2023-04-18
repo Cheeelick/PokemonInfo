@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.pokemoninfo.fragments.PokemonDescriptionFragment
 import com.example.pokemoninfo.fragments.PokemonListFragment
+import com.example.pokemoninfo.model.PokemonType
 
 private const val TAG = "MainActivity"
 
@@ -25,8 +26,8 @@ class MainActivity : AppCompatActivity(),
 
     }
 
-    override fun onCrimeSelected(pokemonId: String) {
-        val fragment = PokemonDescriptionFragment.newInstance(pokemonId)
+    override fun onCrimeSelected(pokemonNameId: String, photo: String, type: List<PokemonType>) {
+        val fragment = PokemonDescriptionFragment.newInstance(pokemonNameId, photo, type)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)

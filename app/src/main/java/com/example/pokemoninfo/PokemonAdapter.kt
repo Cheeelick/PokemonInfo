@@ -14,6 +14,7 @@ import com.example.pokemoninfo.model.PokemonResponse
 import com.example.pokemoninfo.databinding.ItemListPokemonFragmentBinding
 import com.example.pokemoninfo.databinding.ItemListPokemonFragmentBindingImpl
 import com.example.pokemoninfo.fragments.PokemonListFragment
+import com.example.pokemoninfo.model.PokemonResponseDto
 import com.squareup.picasso.Picasso
 
 private const val TAG = "PokemonAdapter"
@@ -27,7 +28,12 @@ class PokemonAdapter(context: Context?, private val callbacks: PokemonListFragme
         holder.bind(getItem(position) as PokemonResponse?)
 
         holder.itemView.setOnClickListener {
-            callbacks?.onCrimeSelected((getItem(position) as PokemonResponse).name)
+            callbacks?.onCrimeSelected(
+                (getItem(position) as PokemonResponse).name,
+                (getItem(position) as PokemonResponse).sprites.other.official_artwork.urlPhoto,
+                (getItem(position) as PokemonResponse).types
+            )
+
         }
     }
 

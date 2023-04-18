@@ -6,7 +6,8 @@ import com.example.pokemoninfo.model.*
 internal fun PokemonResponseDto.toPokemonResponse(): PokemonResponse {
     return PokemonResponse(
         sprites = this.sprites.toOther(),
-        name = name
+        name = name,
+        types = this.types.map{it.toTypeName()}
     )
 }
 
@@ -25,5 +26,17 @@ private fun PokemonPhotoDto.toPokemonPhoto(): PokemonPhoto {
 private fun UrlPokemonPhotoDto.toUrlPokemonPhoto(): UrlPokemonPhoto {
     return UrlPokemonPhoto(
         urlPhoto = urlPhoto
+    )
+}
+
+private fun PokemonTypeDto.toTypeName(): PokemonType {
+    return PokemonType(
+        type = this.type.toType()
+    )
+}
+
+private fun TypeDto.toType(): Type {
+    return Type(
+        typeName = typeName
     )
 }

@@ -10,5 +10,8 @@ data class PokemonResponseDto(
     val sprites: OtherDto,
 
     @Json(name = "name")
-    val name: String
+    val name: String,
+
+    @Json(name = "types")
+    val types: List<PokemonTypeDto>
 )

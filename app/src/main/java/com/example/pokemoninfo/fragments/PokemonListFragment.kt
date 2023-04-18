@@ -14,6 +14,7 @@ import com.example.pokemoninfo.PokemonAdapter
 import com.example.pokemoninfo.R
 import com.example.pokemoninfo.api.ApiInterface
 import com.example.pokemoninfo.databinding.FragmentListPokemonBinding
+import com.example.pokemoninfo.model.PokemonType
 import com.example.pokemoninfo.viewmodels.PassengerViewModel
 import com.example.pokemoninfo.viewmodels.PassengerViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +34,7 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
     }
 
     interface Callbacks{
-        fun onCrimeSelected(pokemonId: String)
+        fun onCrimeSelected(pokemonNameId: String, photo: String, type: List<PokemonType>)
     }
 
 

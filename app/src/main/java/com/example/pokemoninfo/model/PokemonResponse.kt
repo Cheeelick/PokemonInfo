@@ -1,8 +1,7 @@
 package com.example.pokemoninfo.model
 
-import com.example.pokemoninfo.model.Other
-
-data class PokemonResponse (
+data class PokemonResponse(
     val sprites: Other,
-    val name: String
+    val name: String,
+    val types: List<PokemonType>
 )
