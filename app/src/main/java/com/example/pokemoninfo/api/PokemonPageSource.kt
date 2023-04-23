@@ -3,6 +3,7 @@ package com.example.pokemoninfo.api
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.pokemoninfo.model.PokemonResponse
 import com.example.pokemoninfo.model.PokemonResponseDto
 
 
@@ -10,9 +11,9 @@ private const val TAG = "PokemonPageSource"
 
 class PokemonPageSource(
     private val service: ApiInterface,
-) :PagingSource<Int, Any>() {
+) :PagingSource<Int, PokemonResponse>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Any> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonResponse> {
         return try {
             val page = params.key ?: 1
             val pageSize = params.loadSize
@@ -22,7 +23,7 @@ class PokemonPageSource(
             urls.add(response.body()!!)
 
 //            Log.d(TAG, "!!!!!!!!!!${page}!!!!!!!!!!!!!!!")
-//            Log.d(TAG, "!!!!!!!!!!${urls}!!!!!!!!!!!!!!!")
+//            Log.d(TAG, "!!!!!!!!!!Загружена страница ${page}!!!!!!!!!!!!!!!")
 
 
             LoadResult.Page(
@@ -37,7 +38,7 @@ class PokemonPageSource(
     }
 
 
-    override fun getRefreshKey(state: PagingState<Int, Any>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, PokemonResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

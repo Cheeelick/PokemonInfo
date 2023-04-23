@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import com.example.pokemoninfo.fragments.PokemonDescriptionFragment
 import com.example.pokemoninfo.fragments.PokemonListFragment
+import com.example.pokemoninfo.model.PokemonResponse
 import com.example.pokemoninfo.model.PokemonType
+import retrofit2.Response
 
 private const val TAG = "MainActivity"
 
@@ -26,8 +28,8 @@ class MainActivity : AppCompatActivity(),
 
     }
 
-    override fun onCrimeSelected(pokemonNameId: String, photo: String, type: List<PokemonType>) {
-        val fragment = PokemonDescriptionFragment.newInstance(pokemonNameId, photo, type)
+    override fun onPokemonSelected(pokemon: PokemonResponse) {
+        val fragment = PokemonDescriptionFragment.newInstance(pokemon)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
