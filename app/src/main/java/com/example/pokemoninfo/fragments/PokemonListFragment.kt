@@ -66,7 +66,6 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
         binding.recyclerPokemon.apply{
             layoutManager = GridLayoutManager(context,2)
             adapter = pokemonAdapter
-            Log.d(TAG, "!!!!Второй!!!${pokemonAdapter.snapshot().items}!!!")
         }
 
 

@@ -26,14 +26,12 @@
             android:id="@+id/typePokemon0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TypePokemon"
             android:textColor="@color/grey"/>
 
         <TextView
             android:id="@+id/typePokemon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TypePokemon"
             android:textColor="@color/grey"/>
 
     </LinearLayout>

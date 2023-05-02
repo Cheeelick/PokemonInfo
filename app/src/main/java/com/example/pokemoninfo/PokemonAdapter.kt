@@ -3,14 +3,16 @@ package com.example.pokemoninfo
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemoninfo.model.PokemonResponse
-import com.example.pokemoninfo.databinding.ItemListPokemonFragmentBinding
 import com.example.pokemoninfo.fragments.PokemonListFragment
+import com.example.pokemoninfo.ui.PokemonListView
 import com.squareup.picasso.Picasso
 
 private const val TAG = "PokemonAdapter"
@@ -21,40 +23,34 @@ class PokemonAdapter(context: Context?, private val callbacks: PokemonListFragme
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        holder.bind(getItem(position) as PokemonResponse?)
+        holder.bind(getItem(position))
 
         holder.itemView.setOnClickListener {
             callbacks?.onPokemonSelected(
                 (getItem(position) as PokemonResponse)
             )
-
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val binding = DataBindingUtil.inflate<ItemListPokemonFragmentBinding>(
-                layoutInflater, R.layout.item_list_pokemon_fragment, parent, false)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PokemonViewHolder {
+        val view = layoutInflater.inflate(R.layout.item_list_pokemon_fragment, viewGroup, false)
 
-        return PokemonViewHolder(binding)
+        return PokemonViewHolder(view)
     }
 }
 
 
-class PokemonViewHolder(private val binding: ItemListPokemonFragmentBinding)
-    : RecyclerView.ViewHolder(binding.root) {
+class PokemonViewHolder(itemView: View)
+    : RecyclerView.ViewHolder(itemView) {
+
+    val pokemons = itemView.findViewById<PokemonListView>(R.id.pokemonListView)
 
     fun bind(item: PokemonResponse?) {
-        with(binding){
-            Picasso.get()
-                .load(item?.sprites?.other?.official_artwork?.urlPhoto)
-                .into(binding.pokemonImage)
+        pokemons.pokemonType = item!!.types[0].type.typeName
+        pokemons.pokemonPhoto = item.sprites.other.official_artwork.urlPhoto
 
-            namePokemon.text = item?.name
-        }
     }
 }
-
-
 
 
 private object PokemonComparator : DiffUtil.ItemCallback<PokemonResponse>() {
