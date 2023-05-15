@@ -43,12 +43,11 @@ class PokemonAdapter(context: Context?, private val callbacks: PokemonListFragme
 class PokemonViewHolder(itemView: View)
     : RecyclerView.ViewHolder(itemView) {
 
-    val pokemons = itemView.findViewById<PokemonListView>(R.id.pokemonListView)
+    val pokemonsUi = itemView.findViewById<PokemonListView>(R.id.pokemonListView)
 
     fun bind(item: PokemonResponse?) {
-        pokemons.pokemonType = item!!.types[0].type.typeName
-        pokemons.pokemonPhoto = item.sprites.other.official_artwork.urlPhoto
-
+        pokemonsUi.pokemonType = item!!.types[0].type.typeName
+        pokemonsUi.pokemonPhoto = item.sprites.other.official_artwork.urlPhoto
     }
 }
 

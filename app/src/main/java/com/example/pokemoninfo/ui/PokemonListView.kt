@@ -23,7 +23,6 @@ class PokemonListView : View {
     constructor (context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
     constructor (context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
-    private val rect = Rect()
     private val paint = Paint()
     var bm = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     val rectf = RectF(10f, 10f, 500f, 475f)
@@ -90,6 +89,6 @@ class PokemonListView : View {
                 override fun onLoadCleared(placeholder: Drawable?) {}
             })
 
-        canvas.drawBitmap(bm, 0f, 0f, null)
+        canvas.drawBitmap(bm, 0f, 0f, paint)
     }
 }

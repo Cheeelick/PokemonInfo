@@ -3,9 +3,7 @@ package com.example.pokemoninfo.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
@@ -40,6 +38,8 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         val factory = PassengerViewModelFactory(ApiInterface())
         viewModel = ViewModelProviders.of(this, factory).get(PassengerViewModel::class.java)
@@ -80,6 +80,11 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
     override fun onDetach() {
         super.onDetach()
         callbacks = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_search_view_item, menu)
     }
 
     companion object{

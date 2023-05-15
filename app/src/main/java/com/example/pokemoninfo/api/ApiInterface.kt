@@ -17,10 +17,10 @@ interface ApiInterface {
     ): Response<PokemonResponseDto>
 
 
-//    @GET("/api/v2/pokemon/{namePokemon}")
-//    suspend fun searchPokemon(
-//        @Path("namePokemon") namePokemon: String
-//    ): Response<PokemonResponseDto>
+    @GET("/api/v2/pokemon/{namePokemon}")
+    suspend fun searchPokemon(
+        @Path("namePokemon") namePokemon: String
+    ): Response<PokemonResponseDto>
 
     companion object {
 
