@@ -16,13 +16,11 @@ class PokemonPageSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonResponse> {
         return try {
             val page = params.key ?: 1
-            val pageSize = params.loadSize
-            val response = service.getAllName(page, page, pageSize)
+            val response = service.getAllName(page)
 
             val urls = mutableListOf<PokemonResponseDto>()
             urls.add(response.body()!!)
 
-//            Log.d(TAG, "!!!!!!!!!!${page}!!!!!!!!!!!!!!!")
 //            Log.d(TAG, "!!!!!!!!!!Загружена страница ${page}!!!!!!!!!!!!!!!")
 
 

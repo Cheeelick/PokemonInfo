@@ -14,9 +14,13 @@ interface ApiInterface {
     @GET("/api/v2/pokemon/{pages}")
     suspend fun getAllName(
         @Path("pages") pages: Int,
-        @Query("page") page: Int,
-        @Query("pageSize") pageSize: Int
     ): Response<PokemonResponseDto>
+
+
+//    @GET("/api/v2/pokemon/{namePokemon}")
+//    suspend fun searchPokemon(
+//        @Path("namePokemon") namePokemon: String
+//    ): Response<PokemonResponseDto>
 
     companion object {
 

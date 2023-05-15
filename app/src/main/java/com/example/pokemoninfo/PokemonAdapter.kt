@@ -20,7 +20,7 @@ private const val TAG = "PokemonAdapter"
 class PokemonAdapter(context: Context?, private val callbacks: PokemonListFragment.Callbacks?):
     PagingDataAdapter<PokemonResponse, PokemonViewHolder>(PokemonComparator){
 
-    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    private val layoutInflater  : LayoutInflater = LayoutInflater.from(context)
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         holder.bind(getItem(position))
