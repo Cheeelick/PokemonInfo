@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
@@ -44,10 +45,8 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
         val factory = PassengerViewModelFactory(ApiInterface())
         viewModel = ViewModelProviders.of(this, factory).get(PassengerViewModel::class.java)
 
-        lifecycleScope.launch {
-            viewModel.passengers.collectLatest { pageData ->
-                pokemonAdapter.submitData(pageData)
-            }
+        viewModel.pagingLiveData.observe(this) { pageData->
+            pokemonAdapter.submitData(lifecycle, pageData)
         }
     }
 
@@ -68,7 +67,6 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
             adapter = pokemonAdapter
         }
 
-
         return _binding?.root
     }
 
@@ -85,6 +83,31 @@ class PokemonListFragment: Fragment(R.layout.fragment_list_pokemon) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_search_view_item, menu)
+
+        val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.apply{
+            setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    viewModel.setSearchPokemon(query)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.menu_item_clear -> {
+                viewModel.setSearchPokemon("")
+                true
+            }else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object{

@@ -9,25 +9,25 @@ import com.example.pokemoninfo.model.PokemonResponseDto
 
 private const val TAG = "PokemonPageSource"
 
-class PokemonPageSource(
+class PokemonSearchPageSource(
     private val service: ApiInterface,
+    private val searchNamePokemon: String
 ) :PagingSource<Int, PokemonResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonResponse> {
         return try {
-            val page = params.key ?: 1
-            val response = service.getAllName(page)
+            val page = params.key ?: 0
+            val response = service.searchPokemon(searchNamePokemon)
 
             val result = mutableListOf<PokemonResponseDto>()
             result.add(response.body()!!)
 
 //            Log.d(TAG, "!!!!!!!!!!Загружена страница ${page}!!!!!!!!!!!!!!!")
 
-
             LoadResult.Page(
                 data = result.map { it.toPokemonResponse() },
                 prevKey = if (page > 0) page - 1 else null,
-                nextKey = if (page < 1281) page + 1 else null
+                nextKey = null
             )
 
         } catch (e: Exception) {
